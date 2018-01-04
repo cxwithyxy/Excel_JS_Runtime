@@ -20,4 +20,11 @@ getJSInExcel = function (_path)
     return false;
 };
 
+(function ()
+{
+    var a = ExcelArgu.split("cx&&cx");
+    a.pop();
+    ExcelArgu = a;
+})();
+
 eval(getJSInExcel("CXAMD.js"));
