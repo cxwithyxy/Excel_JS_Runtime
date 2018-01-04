@@ -6,7 +6,7 @@ define = function (_moduleList, _f){
     for(i in _moduleList){
         var theFilePath = _moduleList[i];
         if(typeof CXAMD.allModuleLoaded[theFilePath] == typeof UDFUDF){
-            var jsFileData = CXJavaScriptRuner.readFile(theFilePath);
+            var jsFileData = getJSInExcel(theFilePath);
             CXAMD.allModuleLoaded[theFilePath] = eval(jsFileData);
         }
         moduleLoadedInThisTime.push(CXAMD.allModuleLoaded[theFilePath]);
