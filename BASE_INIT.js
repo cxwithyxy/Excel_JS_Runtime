@@ -8,7 +8,7 @@ getJSInExcel = function (_path)
     var index = 1;
     while(true){
         var jsPath = BASESheet.Range("A" + index).value;
-        if(jsPath == ""){
+        if(typeof jsPath == typeof UDFUDF || jsPath == ""){
             break;
         }
         if(jsPath == _path){
@@ -19,3 +19,5 @@ getJSInExcel = function (_path)
     }
     return false;
 };
+
+eval(getJSInExcel("CXAMD.js"));
