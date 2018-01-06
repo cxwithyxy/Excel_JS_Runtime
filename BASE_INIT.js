@@ -22,8 +22,14 @@ getJSInExcel = function (_path)
 
 (function ()
 {
-    var a = ExcelArgu.split("cx&&cx");
+    var a = ExcelArgu.split("__CX_MULTIPLE_ARGUMENTS__");
     a.pop();
+    var len = a.length;
+    for(var i = 0 ;i < len; i ++){
+        var b = a[i].split("__CX_RANGE_VALUE__");
+        b.pop();
+        a[i] = b;
+    }
     ExcelArgu = a;
 })();
 
