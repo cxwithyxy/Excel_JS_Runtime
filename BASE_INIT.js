@@ -27,8 +27,10 @@ getJSInExcel = function (_path)
     var len = a.length;
     for(var i = 0 ;i < len; i ++){
         var b = a[i].split("__CX_RANGE_VALUE__");
-        b.pop();
-        a[i] = b;
+        if(b.length > 1){
+            b.pop();
+            a[i] = b;
+        }
     }
     ExcelArgu = a;
 })();
