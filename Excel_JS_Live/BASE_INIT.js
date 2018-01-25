@@ -31,6 +31,30 @@ netGet = function (url)
     return xmlhttp.responseText;
 };
 
+getJSInNetwork = function (_url, _path)
+{
+    return netGet(_url + _path + "?v=" + Math.random());
+};
+
+setJSInExcel = function (_path,_jsContent)
+{
+    var BASESheet = ThisWorkbook.Worksheets("BASE_CODE_LIB");
+    var index = 1;
+    while(true){
+        var jsPath = BASESheet.Range("A" + index).value;
+        if(typeof jsPath == typeof UDFUDF || jsPath == ""){
+            break;
+        }
+        if(jsPath == _path){
+            BASESheet.Range("B" + index).value2 = _jsContent;
+            return true;
+            break;
+        }
+        index ++;
+    }
+    return false;
+};
+
 (function ()
 {
     var a = ExcelArgu.split("__CX_MULTIPLE_ARGUMENTS__");
