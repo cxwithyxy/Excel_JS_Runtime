@@ -20,6 +20,17 @@ getJSInExcel = function (_path)
     return false;
 };
 
+netGet = function (url)
+{
+    var xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    xmlhttp.open('GET', url, true);
+    xmlhttp.send();
+    while(xmlhttp.readystate != 4){
+      CXJavaScriptRuner.doEventInVb();
+    }
+    return xmlhttp.responseText;
+};
+
 (function ()
 {
     var a = ExcelArgu.split("__CX_MULTIPLE_ARGUMENTS__");
