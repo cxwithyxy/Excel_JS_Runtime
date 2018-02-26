@@ -1,3 +1,10 @@
+BASE_INIT_CONFIG = {};
+BASE_INIT_CONFIG.js_Saving_In_Excel = {
+    cell_Content_Length : 512,
+    max_Cell_Length : 600,
+    except: ["BASE_INIT.js", "CXAMD.js"]
+};
+
 alert = function (_msg){
     CXJavaScriptRuner.alert(_msg.toString());
 };
@@ -12,7 +19,17 @@ getJSInExcel = function (_path)
             break;
         }
         if(jsPath == _path){
-            return BASESheet.Range("B" + index).value;
+            var return_Value = "";
+            var save_Index = 2;
+            while(true){
+                var str = BASESheet.Range(cells(index, save_Index).Address(0, 0)).value;
+                if(!str){
+                    break;
+                }
+                save_Index ++;
+                return_Value += str;
+            }
+            return return_Value;
             break;
         }
         index ++;
@@ -46,7 +63,19 @@ setJSInExcel = function (_path,_jsContent)
             break;
         }
         if(jsPath == _path){
-            BASESheet.Range("B" + index).value2 = _jsContent;
+            if(BASE_INIT_CONFIG.js_Saving_In_Excel.except.join("_CX_").indexOf(_path) != -1){
+                BASESheet.Range("B" + index).value2 = _jsContent;
+                return true;
+            }
+            var save_Index = 2;
+            var split_Length = BASE_INIT_CONFIG.js_Saving_In_Excel.cell_Content_Length;
+            for(var i = 0, len = _jsContent.length / split_Length; i < len; i++) {
+                var need_Str = _jsContent.substr(0,split_Length);
+                BASESheet.Range(cells(index, save_Index).Address(0, 0)).value2 = need_Str;
+                save_Index++;
+                _jsContent = _jsContent.replace(need_Str,'');
+            }
+            BASESheet.Range(cells(index, save_Index).Address(0, 0) + ":" + cells(index, BASE_INIT_CONFIG.js_Saving_In_Excel.max_Cell_Length).Address(0, 0)).Delete();
             return true;
             break;
         }
