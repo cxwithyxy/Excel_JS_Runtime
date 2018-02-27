@@ -1,7 +1,7 @@
 BASE_INIT_CONFIG = {};
 BASE_INIT_CONFIG.js_Saving_In_Excel = {
-    cell_Content_Length : 512,
-    max_Cell_Length : 600,
+    cell_Content_Length : 32000,
+    max_Cell_Length : 10,
     except: ["BASE_INIT.js", "CXAMD.js"]
 };
 
@@ -22,14 +22,14 @@ getJSInExcel = function (_path)
             var return_Value = "";
             var save_Index = 2;
             while(true){
-                var str = BASESheet.Range(cells(index, save_Index).Address(0, 0)).value;
+                var str = BASESheet.Range(cells(index, save_Index).Address(0, 0)).value2;
                 if(!str){
                     break;
                 }
                 save_Index ++;
                 return_Value += str;
             }
-            return return_Value;
+            return return_Value.replace(new RegExp("_等于号_","g"), "=");
             break;
         }
         index ++;
@@ -67,15 +67,17 @@ setJSInExcel = function (_path,_jsContent)
                 BASESheet.Range("B" + index).value2 = _jsContent;
                 return true;
             }
+            _jsContent = _jsContent.replace(new RegExp("=","g"), "_等于号_");
             var save_Index = 2;
             var split_Length = BASE_INIT_CONFIG.js_Saving_In_Excel.cell_Content_Length;
             for(var i = 0, len = _jsContent.length / split_Length; i < len; i++) {
                 var need_Str = _jsContent.substr(0,split_Length);
                 BASESheet.Range(cells(index, save_Index).Address(0, 0)).value2 = need_Str;
+                CXJavaScriptRuner.doEventInVb();
                 save_Index++;
-                _jsContent = _jsContent.replace(need_Str,'');
+                _jsContent = _jsContent.substr(split_Length);
             }
-            BASESheet.Range(cells(index, save_Index).Address(0, 0) + ":" + cells(index, BASE_INIT_CONFIG.js_Saving_In_Excel.max_Cell_Length).Address(0, 0)).Delete();
+            BASESheet.Range(cells(index, save_Index).Address(0, 0) + ":" + cells(index, BASE_INIT_CONFIG.js_Saving_In_Excel.max_Cell_Length).Address(0, 0)).clear();
             return true;
             break;
         }
