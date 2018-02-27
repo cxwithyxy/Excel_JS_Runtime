@@ -23,7 +23,7 @@ function getJsUpdataList()
     return lll;
 }
 
-var jsNetworkURL = "http://127.0.0.1:8080/";
+var jsNetworkURL = CXAMD.net_Url;
 var jsUpdataList = getJsUpdataList();
 
 for(var i in jsUpdataList){
