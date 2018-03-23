@@ -1,7 +1,7 @@
 define(
-    [],
-    function ()
+    ["aa/t1.js"],
+    function (aa,bb)
     {
-        ExcelResult = "asdasd";
+        ExcelResult = t1;
     }
 )

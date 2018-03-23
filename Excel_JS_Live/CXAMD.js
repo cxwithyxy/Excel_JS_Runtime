@@ -7,65 +7,69 @@ CXAMD.net_Mode = (function ()
     return ThisWorkbook.Name.indexOf(".NET_MODE.") != -1;
 })();
 
-// define = function (_moduleList, _f){
-//     var moduleLoadedInThisTime = [];
-//     for(i in _moduleList){
-//         var theFilePath = _moduleList[i];
-//         if(typeof CXAMD.allModuleLoaded[theFilePath] == typeof UDFUDF){
-//             var jsFileData = "";
-//             if (CXAMD.net_Mode) {
-//                 jsFileData = getJSInNetwork(CXAMD.net_Url, theFilePath);;
-//             }
-//             if(jsFileData.length < 1){
-//                 jsFileData = getJSInExcel(theFilePath);
-//             }
-//             CXAMD.allModuleLoaded[theFilePath] = eval(jsFileData);
-//         }
-//         moduleLoadedInThisTime.push(CXAMD.allModuleLoaded[theFilePath]);
-//     }
-//     return _f.apply(this, moduleLoadedInThisTime);
-// };
+CXAMD.get_Module = function (theFilePath)
+{
+    if(typeof CXAMD.allModuleLoaded[theFilePath] == typeof UDFUDF){
+        var jsFileData = "";
+        if (CXAMD.net_Mode) {
+            jsFileData = getJSInNetwork(CXAMD.net_Url, theFilePath);
+        }
+        if(jsFileData.length < 1){
+            jsFileData = getJSInExcel(theFilePath);
+        }
+        CXAMD.allModuleLoaded[theFilePath] = eval(jsFileData) || null;
+    }
+    return CXAMD.allModuleLoaded[theFilePath];
+};
 
-deine = function (_moduleList, _f){
-    
-    var moduleLoadedInThisTime = [];
+CXAMD.runtime_In_Obj = function (inObj, funS)
+{
+    return eval(
+        "(function (){"+
+
+            "return function (a){" +
+                "with(a){"+
+                    funS +
+                "}"+
+            "}"+
+        "})();"
+    )(inObj);
+};
+
+CXAMD.get_Func_Content = function (fg)
+{
+    var temp = fg.toString().split("{");
+    temp.shift();
+    temp = temp.join("{").split("}");
+    temp.pop();
+    return temp.join("}");
+};
+
+CXAMD.get_Func_Argument = function (fg)
+{
+    var temp = fg.toString().split("(");
+    temp.shift();
+    temp = temp.join("(").split(")");
+    return temp[0].replace(new RegExp(" ","g"),"").split(",")
+};
+
+CXAMD.get_Module_Name_By_Path = function (_path)
+{
+    var temp = _path.split(".");
+    temp.pop();
+    return temp.join("_").split("/").pop();
+};
+
+define = function (_moduleList, _f){
+    var pre_Set_var = CXAMD.get_Func_Argument(_f);
+    var runtime_Obj = {};
     for(i in _moduleList){
         var theFilePath = _moduleList[i];
-        if(typeof CXAMD.allModuleLoaded[theFilePath] == typeof UDFUDF){
-            var jsFileData = "";
-            if (CXAMD.net_Mode) {
-                jsFileData = getJSInNetwork(CXAMD.net_Url, theFilePath);;
-            }
-            if(jsFileData.length < 1){
-                jsFileData = getJSInExcel(theFilePath);
-            }
-            CXAMD.allModuleLoaded[theFilePath] = eval(jsFileData);
-        }
-        moduleLoadedInThisTime.push(CXAMD.allModuleLoaded[theFilePath]);
+        var module_Obj = CXAMD.get_Module(theFilePath);
+        var module_Name = CXAMD.get_Module_Name_By_Path(theFilePath);
+        runtime_Obj[module_Name] = module_Obj;
+        runtime_Obj[pre_Set_var[i]] = module_Obj;
     }
-
-    function runtime_In_Obj(inObj, funS)
-    {
-        return eval(
-            "(function (){"+
-
-                "return function (a){" +
-                    "with(a){"+
-                        funS +
-                    "}"+
-                "}"+
-            "})();"
-        )(inObj);
-    }
-
-    function get_Func_Content(fg)
-    {
-        var temp = fg.toString().split("{");
-        temp.shift();
-        temp = temp.join("{").split("}");
-        temp.pop();
-        return temp.join("}");
-    }
-    // return _f.apply(this, moduleLoadedInThisTime);
+    return CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
 };
 define.amd = true;
