@@ -5,6 +5,14 @@ BASE_INIT_CONFIG.js_Saving_In_Excel = {
     except: ["BASE_INIT.js", "CXAMD.js"]
 };
 
+Function.prototype.bind = function (_this){
+    var _f = this;
+    return function ()
+    {
+        _f.apply(_this, arguments);
+    }
+}
+
 alert = function (_msg){
     CXJavaScriptRuner.alert(_msg.toString());
 };
