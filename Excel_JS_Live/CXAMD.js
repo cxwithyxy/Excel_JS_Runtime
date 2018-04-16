@@ -17,7 +17,8 @@ CXAMD.get_Module = function (theFilePath)
         if(jsFileData.length < 1){
             jsFileData = getJSInExcel(theFilePath);
         }
-        CXAMD.allModuleLoaded[theFilePath] = eval(jsFileData) || null;
+        
+        CXAMD.allModuleLoaded[theFilePath] = CXAMD.runtime_In_Obj(this, jsFileData) || null;
     }
     return CXAMD.allModuleLoaded[theFilePath];
 };
@@ -26,11 +27,12 @@ CXAMD.runtime_In_Obj = function (inObj, funS)
 {
     return eval(
         "(function (){"+
-
             "return function (a){" +
+                "eval_Global = null;" +
                 "with(a){"+
                     funS +
                 "}"+
+                "return eval_Global;" +
             "}"+
         "})();"
     )(inObj);
@@ -70,6 +72,7 @@ define = function (_moduleList, _f){
         runtime_Obj[module_Name] = module_Obj;
         runtime_Obj[pre_Set_var[i]] = module_Obj;
     }
-    return CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
+    eval_Global = CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
+    return eval_Global;
 };
-define.amd = true;
+define.amd = {};
