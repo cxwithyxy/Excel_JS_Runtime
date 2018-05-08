@@ -4,7 +4,8 @@
         [],
         function ()
         {
-            return "t1";
+            ExcelResult = Number(ExcelArgu[0])*1000;
+
         }
     )
 })()
