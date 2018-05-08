@@ -26,3 +26,8 @@ Attribute UpdataJSFiles.VB_ProcData.VB_Invoke_Func = "R\n14"
     
     
 End Sub
+
+Sub flashDisplay()
+Attribute flashDisplay.VB_ProcData.VB_Invoke_Func = "W\n14"
+    Application.CalculateFull
+End Sub

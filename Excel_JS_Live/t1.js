@@ -4,7 +4,7 @@
         [],
         function ()
         {
-            ExcelResult = Number(ExcelArgu[0])*1000;
+            ExcelResult = Number(ExcelArgu[0])*3.14;
 
         }
     )
