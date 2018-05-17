@@ -125,3 +125,7 @@ define(
 ## 关于NET_MODE模式
 
 [什么是NET_MODE模式](what_Is_Net_Mode.md)
+
+## 关于DEBUG_MODE模式
+
+[什么是DEBUG_MODE模式](what_Is_Debug_Mode.md)
