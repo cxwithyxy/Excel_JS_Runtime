@@ -7,12 +7,20 @@ CXAMD.net_Mode = (function ()
     return ThisWorkbook.Name.indexOf(".NET_MODE.") != -1;
 })();
 
+CXAMD.debug_Mode = (function ()
+{
+    return ThisWorkbook.Name.indexOf(".DEBUG_MODE.") != -1;
+})();
+
 CXAMD.debug_Server_Url = 'http://127.0.0.1:8081/';
 
 console = {call_Time:0};
 
 console.log = function (data)
 {
+    if(!CXAMD.debug_Mode){
+        return;
+    }
     console.call_Time ++;
     var output = "";
     try{
