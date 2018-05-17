@@ -7,6 +7,34 @@ CXAMD.net_Mode = (function ()
     return ThisWorkbook.Name.indexOf(".NET_MODE.") != -1;
 })();
 
+CXAMD.debug_Server_Url = 'http://127.0.0.1:8081/';
+
+console = {call_Time:0};
+
+console.log = function (data)
+{
+    console.call_Time ++;
+    var output = "";
+    try{
+        output = data.toString();
+    }catch(e){
+        output = typeof data;
+    }
+    switch(output){
+        case "[object Object]":
+            output += "\nMay be a javascript object";
+            break;
+        case "object":
+            output += "\nMay be a VBA object";
+            break;
+    }
+    var main_Body = "" +
+        "----- console.log time:[" + console.call_Time + "] -----\n" +
+        output +
+        "\n";
+    netPost(CXAMD.debug_Server_Url, main_Body);
+}
+
 CXAMD.get_Module = function (theFilePath)
 {
     if(typeof CXAMD.allModuleLoaded[theFilePath] == typeof UDFUDF){

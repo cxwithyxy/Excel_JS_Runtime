@@ -51,7 +51,20 @@ netGet = function (url)
     xmlhttp.open('GET', url, true);
     xmlhttp.send();
     while(xmlhttp.readystate != 4){
-      CXJavaScriptRuner.doEventInVb();
+        CXJavaScriptRuner.doEventInVb();
+    }
+    return xmlhttp.responseText;
+};
+
+netPost = function (url, PostData)
+{
+    var xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    xmlhttp.open('POST', url, true);
+    xmlhttp.setRequestHeader("content-Length", PostData.length);
+    xmlhttp.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+    xmlhttp.send(PostData);
+    while(xmlhttp.readystate != 4){
+        CXJavaScriptRuner.doEventInVb();
     }
     return xmlhttp.responseText;
 };
