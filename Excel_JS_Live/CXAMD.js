@@ -73,6 +73,9 @@ CXAMD.get_Module = function (theFilePath)
                 case "http":
                     jsFileData = netGet(theFilePath);
                     break;
+                case "https":
+                    jsFileData = netGet(theFilePath);
+                    break;
                 default:
                     alert("Unknow Protocol 【" + path_Protocol + "】 when loadding 【" + theFilePath + "】");
             }
