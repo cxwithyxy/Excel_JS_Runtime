@@ -2,6 +2,6 @@ define(
     [],
     function ()
     {
-        return "t2";
+        return "t2a阿萨大";
     }
-)
+);

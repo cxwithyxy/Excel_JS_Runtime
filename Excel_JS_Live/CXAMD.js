@@ -43,20 +43,45 @@ console.log = function (data)
     netPost(CXAMD.debug_Server_Url, main_Body);
 }
 
+CXAMD.get_Path_Protocol = function (_path)
+{
+    if(_path.indexOf("://") != -1){
+        return _path.split("://")[0].toLowerCase();
+    }
+    return false;
+}
+
+CXAMD.read_Js_File = function (_path)
+{
+    _path = _path.split("://")[1];
+    _path = CXJavaScriptRuner.getBasePath() + "/" + _path;
+    var fWR = CXJavaScriptRuner.getFileWR();
+    return fWR.readFile(_path);
+}
+
 CXAMD.get_Module = function (theFilePath)
 {
     if(typeof CXAMD.allModuleLoaded[theFilePath] == typeof UDFUDF){
         var jsFileData = "";
-        if (CXAMD.net_Mode) {
-            jsFileData = getJSInNetwork(CXAMD.net_Url, theFilePath);
-        }
-        if(jsFileData.length < 1){
-            jsFileData = getJSInExcel(theFilePath);
-            if (jsFileData === false) {
-                alert("No Found 【" + theFilePath + "】");
+
+        var path_Protocol = CXAMD.get_Path_Protocol(theFilePath);
+        if(path_Protocol !== false){
+            if(path_Protocol == "file"){
+                jsFileData = CXAMD.read_Js_File(theFilePath);
+
+            }
+        }else{
+            if (CXAMD.net_Mode) {
+                jsFileData = getJSInNetwork(CXAMD.net_Url, theFilePath);
+            }
+            if(jsFileData.length < 1){
+                jsFileData = getJSInExcel(theFilePath);
+                if (jsFileData === false) {
+                    alert("No Found 【" + theFilePath + "】");
+                }
             }
         }
-        
+
         CXAMD.allModuleLoaded[theFilePath] = CXAMD.runtime_In_Obj(this, jsFileData) || null;
     }
     return CXAMD.allModuleLoaded[theFilePath];
