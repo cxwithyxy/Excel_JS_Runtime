@@ -41,15 +41,16 @@ Function dirForJs(Optional path As String)
     dirForJs = returnName
 End Function
 
-Function readFile(filePathRelative)
-    Dim returnTxt As String
-    Dim txt As String * 1
-    returnTxt = ""
-    Open filePathRelative For Binary As #1  '
-    Do While Not EOF(1)
-        Get #1, , txt
-        returnTxt = returnTxt & txt
-    Loop
-    Close #1
-    readFile = returnTxt
+
+
+Function readFile(FileName)
+  
+  Set oStream = CreateObject("adodb.stream")
+  oStream.Open
+  oStream.Charset = "UTF-8"
+  oStream.LoadFromFile FileName
+
+  readFile = oStream.ReadText()
+
+  oStream.Close
 End Function
