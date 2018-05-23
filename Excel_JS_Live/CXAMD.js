@@ -40,11 +40,7 @@ console.log = function (data)
         "----- console.log time:[" + console.call_Time + "] -----\n" +
         output +
         "\n";
-    if(CXAMD.debug_Mode){
-        netPost(CXAMD.debug_Server_Url, main_Body);
-    }else{
-        alert(main_Body);
-    }
+    netPost(CXAMD.debug_Server_Url, main_Body);
 }
 
 CXAMD.get_Path_Protocol = function (_path)
@@ -69,7 +65,12 @@ console.error = function (file_Path, err)
         "----- [ERROR](" + file_Path + ") -----\n" +
         (err.description ? err.description : err) +
         "\n";
-    netPost(CXAMD.debug_Server_Url, main_Body);
+    
+    if(CXAMD.debug_Mode){
+        netPost(CXAMD.debug_Server_Url, main_Body);
+    }else{
+        alert(main_Body);
+    }
 }
 
 CXAMD.get_Module = function (theFilePath)
