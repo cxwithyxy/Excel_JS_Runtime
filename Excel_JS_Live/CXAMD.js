@@ -52,6 +52,9 @@ CXAMD.get_Module = function (theFilePath)
         }
         if(jsFileData.length < 1){
             jsFileData = getJSInExcel(theFilePath);
+            if (jsFileData === false) {
+                alert("No Found 【" + theFilePath + "】");
+            }
         }
         
         CXAMD.allModuleLoaded[theFilePath] = CXAMD.runtime_In_Obj(this, jsFileData) || null;
