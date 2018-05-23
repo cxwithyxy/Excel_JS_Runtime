@@ -66,10 +66,17 @@ CXAMD.get_Module = function (theFilePath)
 
         var path_Protocol = CXAMD.get_Path_Protocol(theFilePath);
         if(path_Protocol !== false){
-            if(path_Protocol == "file"){
-                jsFileData = CXAMD.read_Js_File(theFilePath);
-
+            switch(path_Protocol){
+                case "file":
+                    jsFileData = CXAMD.read_Js_File(theFilePath);
+                    break;
+                case "http":
+                    jsFileData = netGet(theFilePath);
+                    break;
+                default:
+                    alert("Unknow Protocol 【" + path_Protocol + "】 when loadding 【" + theFilePath + "】");
             }
+
         }else{
             if (CXAMD.net_Mode) {
                 jsFileData = getJSInNetwork(CXAMD.net_Url, theFilePath);
