@@ -25,6 +25,11 @@ argu1
 
 ```
 
+##### 关于错误提示
+
+在 DEBUG_MODE模式 下，错误会在 **debug server** 中输入。
+
+不在 DEBUG_MODE模式 下时， 错误被 **alert** 弹出。
 
 ---
 

@@ -122,6 +122,10 @@ define(
 
 0. 由于js错误处理尚未有解决方案，因此展示无法提示js哪里出现错误，__请认真写代码仔细审查__
 
+## 关于js文件引入方式
+
+[如何科学地引入js文件](how_To_Import_Js_File.md)
+
 ## 关于NET_MODE模式
 
 [什么是NET_MODE模式](what_Is_Net_Mode.md)
