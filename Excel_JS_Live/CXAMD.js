@@ -40,7 +40,11 @@ console.log = function (data)
         "----- console.log time:[" + console.call_Time + "] -----\n" +
         output +
         "\n";
-    netPost(CXAMD.debug_Server_Url, main_Body);
+    if(CXAMD.debug_Mode){
+        netPost(CXAMD.debug_Server_Url, main_Body);
+    }else{
+        alert(main_Body);
+    }
 }
 
 CXAMD.get_Path_Protocol = function (_path)
@@ -57,6 +61,15 @@ CXAMD.read_Js_File = function (_path)
     _path = CXJavaScriptRuner.getBasePath() + "/" + _path;
     var fWR = CXJavaScriptRuner.getFileWR();
     return fWR.readFile(_path);
+}
+
+console.error = function (file_Path, err)
+{
+    var main_Body = "" +
+        "----- [ERROR](" + file_Path + ") -----\n" +
+        (err.description ? err.description : err) +
+        "\n";
+    netPost(CXAMD.debug_Server_Url, main_Body);
 }
 
 CXAMD.get_Module = function (theFilePath)
@@ -77,7 +90,9 @@ CXAMD.get_Module = function (theFilePath)
                     jsFileData = netGet(theFilePath);
                     break;
                 default:
-                    alert("Unknow Protocol 【" + path_Protocol + "】 when loadding 【" + theFilePath + "】");
+                    var err_Text = "Unknow Protocol 【" + path_Protocol + "】 when loadding 【" + theFilePath + "】";
+                    console.error(theFilePath, err_Text);
+                    throw err_Text;
             }
 
         }else{
@@ -87,12 +102,18 @@ CXAMD.get_Module = function (theFilePath)
             if(jsFileData.length < 1){
                 jsFileData = getJSInExcel(theFilePath);
                 if (jsFileData === false) {
-                    alert("No Found 【" + theFilePath + "】");
+                    var err_Text = "No Found 【" + theFilePath + "】";
+                    console.error(theFilePath, err_Text);
+                    throw err_Text;
                 }
             }
         }
-
-        CXAMD.allModuleLoaded[theFilePath] = CXAMD.runtime_In_Obj(this, jsFileData) || null;
+        try{
+            CXAMD.allModuleLoaded[theFilePath] = CXAMD.runtime_In_Obj(this, jsFileData) || null;
+        }catch(e){
+            console.error(theFilePath, e);
+            throw e;
+        }
     }
     return CXAMD.allModuleLoaded[theFilePath];
 };
