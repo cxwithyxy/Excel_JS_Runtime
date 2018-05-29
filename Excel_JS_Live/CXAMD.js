@@ -158,17 +158,23 @@ CXAMD.get_Module_Name_By_Path = function (_path)
     return temp.join("_").split("/").pop();
 };
 
-define = function (_moduleList, _f){
+define = function (_moduleList, _f, _is_Scope_Mode){
     var pre_Set_var = CXAMD.get_Func_Argument(_f);
     var runtime_Obj = {};
-    for(i in _moduleList){
+    var function_Argu = [];
+    for(var i in _moduleList){
         var theFilePath = _moduleList[i];
         var module_Obj = CXAMD.get_Module(theFilePath);
         var module_Name = CXAMD.get_Module_Name_By_Path(theFilePath);
         runtime_Obj[module_Name] = module_Obj;
         runtime_Obj[pre_Set_var[i]] = module_Obj;
+        function_Argu.push(module_Obj);
     }
-    eval_Global = CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
+    if(_is_Scope_Mode){
+        eval_Global = CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
+    }else{
+        eval_Global = _f.apply(runtime_Obj,function_Argu);
+    }
     return eval_Global;
 };
 define.amd = {};
