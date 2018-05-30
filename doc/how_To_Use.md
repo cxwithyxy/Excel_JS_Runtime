@@ -133,3 +133,8 @@ define(
 ## 关于DEBUG_MODE模式
 
 [什么是DEBUG_MODE模式](what_Is_Debug_Mode.md)
+
+## 关于define函数的作用域模式
+
+[什么是define函数的作用域模式](what_Is_Define_Function_Scope_Mode.md)
+
