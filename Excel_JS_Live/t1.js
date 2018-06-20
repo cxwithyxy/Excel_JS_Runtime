@@ -1,24 +1,15 @@
-(function ()
-{
-    define(
-        // ["t2.js"],
-        ["file://../Excel_JS_Live/t2.js"],
-        function (t2)
-        {
-        
-            var aa = "file://../Excel_JS_Live/t2.js";
-            // var aa = "https://www.aaa.com/a.js";
-            // var aa = "./a.js";
+define(
+    ["t2.js"],
+    function (ttt2)
+    {
 
-            // 阿萨大
+        ExcelResult = Number(ExcelArgu[0])*Math.random();
+        // console.log(lodash.take([1, 2, 3, 4],2));
+        // CXAMD.runtime_In_Obj({b:2,tt:21312},"console.log('tt: '+ tt)");
+        // console.log(this.Array);
+        console.log(ttt2 == null);
+        console.log(t2 == null);
+        return "t1";
+    }
+)
 
-            console.log(t2);
-            // console.log(CXAMD.read_Js_File(aa));
-            
-            ExcelResult = Number(ExcelArgu[0])*Math.random();
-
-            return "t1";
-        }
-    )
-})()
-    

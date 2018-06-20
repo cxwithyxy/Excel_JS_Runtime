@@ -126,7 +126,9 @@ CXAMD.runtime_In_Obj = function (inObj, funS)
             "return function (a){" +
                 "eval_Global = null;" +
                 "with(a){"+
-                    funS +
+                    "eval_Global = (function (){" + 
+                        funS +
+                    "})();" + 
                 "}"+
                 "return eval_Global;" +
             "}"+
@@ -158,7 +160,7 @@ CXAMD.get_Module_Name_By_Path = function (_path)
     return temp.join("_").split("/").pop();
 };
 
-define = function (_moduleList, _f, _is_Scope_Mode){
+define = function (_moduleList, _f){
     var pre_Set_var = CXAMD.get_Func_Argument(_f);
     var runtime_Obj = {};
     var function_Argu = [];
@@ -170,11 +172,7 @@ define = function (_moduleList, _f, _is_Scope_Mode){
         runtime_Obj[pre_Set_var[i]] = module_Obj;
         function_Argu.push(module_Obj);
     }
-    if(_is_Scope_Mode){
-        eval_Global = CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
-    }else{
-        eval_Global = _f.apply(runtime_Obj,function_Argu);
-    }
+    eval_Global = CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
     return eval_Global;
 };
 define.amd = {};
