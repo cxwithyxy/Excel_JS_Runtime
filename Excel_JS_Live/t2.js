@@ -1,8 +1,15 @@
-define(
-    [],
-    function ()
-    {
-        
-        return "t2a阿萨大";
-    }
-);
+(function (){
+    (function (){
+        (function (){
+            define(
+                [],
+                function ()
+                {
+
+                    return "t2a阿萨大";
+                }
+            );
+        })();
+    })();
+})();
+

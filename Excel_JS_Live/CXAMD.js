@@ -110,7 +110,7 @@ CXAMD.get_Module = function (theFilePath)
             }
         }
         try{
-            CXAMD.allModuleLoaded[theFilePath] = CXAMD.runtime_In_Obj(this, jsFileData) || null;
+            CXAMD.allModuleLoaded[theFilePath] = CXAMD.runtime_In_Obj_JS_Code({}, jsFileData) || null;
         }catch(e){
             console.error(theFilePath, e);
             throw e;
@@ -119,7 +119,7 @@ CXAMD.get_Module = function (theFilePath)
     return CXAMD.allModuleLoaded[theFilePath];
 };
 
-CXAMD.runtime_In_Obj = function (inObj, funS)
+CXAMD.runtime_In_Obj_Func_Content = function (inObj, funS)
 {
     return eval(
         "(function (){"+
@@ -127,6 +127,23 @@ CXAMD.runtime_In_Obj = function (inObj, funS)
                 "eval_Global = null;" +
                 "with(a){"+
                     "eval_Global = (function (){" + 
+                        funS +
+                    "})();" + 
+                "}"+
+                "return eval_Global;" +
+            "}"+
+        "})();"
+    )(inObj);
+};
+
+CXAMD.runtime_In_Obj_JS_Code = function (inObj, funS)
+{
+    return eval(
+        "(function (){"+
+            "return function (a){" +
+                "eval_Global = null;" +
+                "with(a){"+
+                    "(function (){" + 
                         funS +
                     "})();" + 
                 "}"+
@@ -172,7 +189,7 @@ define = function (_moduleList, _f){
         runtime_Obj[pre_Set_var[i]] = module_Obj;
         function_Argu.push(module_Obj);
     }
-    eval_Global = CXAMD.runtime_In_Obj(runtime_Obj, CXAMD.get_Func_Content(_f));
+    eval_Global = CXAMD.runtime_In_Obj_Func_Content(runtime_Obj, CXAMD.get_Func_Content(_f));
     return eval_Global;
 };
 define.amd = {};
