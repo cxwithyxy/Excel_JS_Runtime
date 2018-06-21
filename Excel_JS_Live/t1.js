@@ -9,24 +9,26 @@
         {
             ExcelResult = Number(ExcelArgu[0])*Math.random();
             // start
-            console.log("CX_Define");
-            console.log(typeof define);
-            console.log(typeof require);
+            console.log("main start");
 
-            define(
-                "a_Test",
-                [],
-                function ()
-                {
-                    console.log("def a_Test");
-                    return "def req";
-                }
-            );
-            require(['a_Test'], function( a ) {
+            // 当这里是main的HTML就行了 
+            // define(
+            //     "a_Test",
+            //     ["./rt1.js"],
+            //     function (rt1)
+            //     {
+            //         console.log("rt1 is " + rt1);
+            //         console.log("def a_Test");
+            //         return "def req";
+            //     }
+            // );
+
+            require(['rt2'], function( a ) {
                 console.log(a);
             });
 
 
+            console.log("main end");
             // end
             return "t1";
         }

@@ -11,7 +11,7 @@ CX_Define(
         //problems with requirejs.exec()/transpiler plugins that may not be strict.
         /*jslint regexp: true, nomen: true, sloppy: true */
         /*global window, navigator, document, importScripts, setTimeout, opera */
-        var requirejs
+        // var requirejs
         (function (global) {
             var req, s, head, baseElement, dataMain, src,
                 interactiveScript, currentlyAddingScript, mainScript, subPath,
