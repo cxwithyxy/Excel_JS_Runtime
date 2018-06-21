@@ -36,7 +36,7 @@ Function addInitToJsCode(code)
 End Function
 
 Function runJsFile(filePath, ExcelArgu)
-    evalstr = "define(['" & filePath & "'],function (){})"
+    evalstr = "CX_Define(['before_RequireJS.min.js','CX_RequireJS.min.js'],function (){require(['" & filePath & "'], function() {})})"
     runJsFile = runJS("eval(" & evalstr & ");", ExcelArgu)
 End Function
 
