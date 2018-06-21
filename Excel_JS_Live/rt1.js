@@ -1,6 +1,6 @@
 define(
-    ["rt2"],
-    function (rt2)
+    [],
+    function ()
     {
         console.log("def rt1");
         return "rt1";
