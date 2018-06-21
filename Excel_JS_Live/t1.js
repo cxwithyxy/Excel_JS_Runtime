@@ -3,18 +3,17 @@
     CX_Define(
         [
             "before_RequireJS.js",
-            "CX_RequireJS.js",
-            "rt1.js"
+            "CX_RequireJS.js"
         ],
         function ()
         {
             ExcelResult = Number(ExcelArgu[0])*Math.random();
             // start
             console.log("CX_Define");
-            console.log(typeof define_Req);
-            console.log(typeof require_req);
+            console.log(typeof define);
+            console.log(typeof require);
 
-            define_Req(
+            define(
                 "a_Test",
                 [],
                 function ()
@@ -23,8 +22,8 @@
                     return "def req";
                 }
             );
-            require_req(['rt1'], function( a_Test ) {
-                console.log(a_Test);
+            require(['a_Test'], function( a ) {
+                console.log(a);
             });
 
 

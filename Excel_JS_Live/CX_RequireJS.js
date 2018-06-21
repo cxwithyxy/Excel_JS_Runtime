@@ -11,7 +11,7 @@ CX_Define(
         //problems with requirejs.exec()/transpiler plugins that may not be strict.
         /*jslint regexp: true, nomen: true, sloppy: true */
         /*global window, navigator, document, importScripts, setTimeout, opera */
-        var requirejs, require, define;
+        var requirejs
         (function (global) {
             var req, s, head, baseElement, dataMain, src,
                 interactiveScript, currentlyAddingScript, mainScript, subPath,
@@ -1704,7 +1704,7 @@ CX_Define(
              * on a require that are not standardized), and to give a short
              * name for minification/local scope use.
              */
-            req = requirejs = require_req = function (deps, callback, errback, optional) {
+            req = requirejs = require = function (deps, callback, errback, optional) {
 
                 //Find the right context, use default
                 var context, config,
@@ -1988,7 +1988,7 @@ CX_Define(
              * return a value to define the module corresponding to the first argument's
              * name.
              */
-            define_Req = function (name, deps, callback) {
+            define = function (name, deps, callback) {
                 var node, context;
 
                 //Allow for anonymous modules
@@ -2050,7 +2050,7 @@ CX_Define(
                 (context ? context.defQueue : globalDefQueue).push([name, deps, callback]);
             };
 
-            define_Req.amd = {
+            define.amd = {
                 jQuery: true
             };
 
