@@ -1913,11 +1913,7 @@ CX_Define(
                         //Account for anonymous modules
                         context.completeLoad(moduleName);
                     } catch (e) {
-                        context.onError(makeError('importscripts',
-                                        'importScripts failed for ' +
-                                            moduleName + ' at ' + url,
-                                        e,
-                                        [moduleName]));
+                        console.error(moduleName, e);
                     }
                 }
             };
@@ -2070,6 +2066,5 @@ CX_Define(
             req(cfg);
         }(this));
 
-        return 1;
     }
 )

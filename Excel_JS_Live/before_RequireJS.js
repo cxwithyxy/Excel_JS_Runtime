@@ -43,8 +43,6 @@ CX_Define(
                 console.error(theFilePath, e);
                 throw e;
             }
-            return 1;
         }
-        return 2;
     }
 )
