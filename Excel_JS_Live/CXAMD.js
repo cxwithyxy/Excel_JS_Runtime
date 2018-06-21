@@ -177,7 +177,7 @@ CXAMD.get_Module_Name_By_Path = function (_path)
     return temp.join("_").split("/").pop();
 };
 
-define = function (_moduleList, _f){
+CX_Define = function (_moduleList, _f){
     var pre_Set_var = CXAMD.get_Func_Argument(_f);
     var runtime_Obj = {};
     var function_Argu = [];
@@ -192,4 +192,4 @@ define = function (_moduleList, _f){
     eval_Global = CXAMD.runtime_In_Obj_Func_Content(runtime_Obj, CXAMD.get_Func_Content(_f));
     return eval_Global;
 };
-define.amd = {};
+CX_Define.amd = {};

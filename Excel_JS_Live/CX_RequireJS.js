@@ -1,4 +1,4 @@
-define(
+CX_Define(
     [],
     function ()
     {
@@ -11,8 +11,7 @@ define(
         //problems with requirejs.exec()/transpiler plugins that may not be strict.
         /*jslint regexp: true, nomen: true, sloppy: true */
         /*global window, navigator, document, importScripts, setTimeout, opera */
-
-        // var requirejs, require, define;
+        var requirejs, require, define;
         (function (global) {
             var req, s, head, baseElement, dataMain, src,
                 interactiveScript, currentlyAddingScript, mainScript, subPath,
@@ -1705,7 +1704,7 @@ define(
              * on a require that are not standardized), and to give a short
              * name for minification/local scope use.
              */
-            req = requirejs = function (deps, callback, errback, optional) {
+            req = requirejs = require_req = function (deps, callback, errback, optional) {
 
                 //Find the right context, use default
                 var context, config,
@@ -2071,8 +2070,6 @@ define(
             req(cfg);
         }(this));
 
-        console.log("RequireJS.js");
-        console.log(require);
         return 1;
     }
 )
