@@ -23,3 +23,7 @@ release/base.xlsm 是发行版了，每次开发的时候就拿这个文件做�
 #### 开发教程
 
 [查看开发示例](doc/how_To_Use.md)
+
+#### 下个版本展望
+
+[展望](NEXTVERSION.md)
