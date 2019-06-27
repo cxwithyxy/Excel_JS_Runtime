@@ -24,6 +24,6 @@ release/base.xlsm 是发行版了，每次开发的时候就拿这个文件做�
 
 [查看开发示例](doc/how_To_Use.md)
 
-#### 下个版本展望
+#### 最优的使用方法
 
-[展望](NEXTVERSION.md)
+[Excel_JS_Runtime_CLI](https://github.com/cxwithyxy/Excel_JS_Runtime_CLI)
